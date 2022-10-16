@@ -1,2 +1,11 @@
 cmake-build-debug/
 .idea/
+CMakeFiles/
+lib/
+bin/
+
+*.cmake
+CmakeCache.txt
+Makefile
+dungeon_game
+dungeon_game_tests
