@@ -6,11 +6,11 @@ set(CMAKE_CXX_STANDARD 11)
 
 enable_testing()
 
-add_subdirectory(googletest)
+add_subdirectory(thirdparty/googletest)
 
 
 set(Sources
-        main.c
+        src/main.c
         )
 
 add_executable(dungeon_game ${Sources})
