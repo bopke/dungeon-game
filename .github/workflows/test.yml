@@ -1,0 +1,24 @@
+name: Run tests
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+
+env:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: 'recursive'
+    - name: Setup Cmake
+      run: cmake .
+    - name: Compile project
+      run: make
+    - name: Test
+      run: make test
+      
