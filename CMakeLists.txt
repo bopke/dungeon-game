@@ -8,18 +8,19 @@ enable_testing()
 
 add_subdirectory(thirdparty/googletest)
 
-
+set(Headers
+        src/map.h
+        )
 set(Sources
-        src/main.c
+        src/map.c
         )
 
-add_executable(dungeon_game ${Sources})
+add_executable(dungeon_game src/main.c ${Headers} ${Sources})
 
 set(Test_Sources
-        tests/main.cpp
-        )
+        tests/map.cpp)
 
-add_executable(dungeon_game_tests ${Test_Sources})
+add_executable(dungeon_game_tests ${Headers} ${Sources} ${Test_Sources})
 
 target_link_libraries(dungeon_game_tests PUBLIC
         gtest_main
