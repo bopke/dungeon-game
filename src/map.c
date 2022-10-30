@@ -44,10 +44,8 @@ int read_map(FILE *file, Map *map) {
     for (int i = 0; i < map->height; i++) {
         for (int j = 0; j < map->width; j++) {
             map->fields[i][j] = fgetc(file);
-            printf("%c", map->fields[i][j]);
         }
         fgetc(file); // discard newline
-        printf("\n");
     }
     if (feof(file)) return 1;
     return 0;
