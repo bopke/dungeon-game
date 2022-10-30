@@ -6,7 +6,7 @@ on:
   pull_request:
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,5 +18,5 @@ jobs:
     - name: Compile project
       run: make
     - name: Test
-      run: make test
+      run: ./dungeon_game_tests
       
