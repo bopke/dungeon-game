@@ -1,20 +1,30 @@
 #ifndef DUNGEON_GAME_MAP_H
 #define DUNGEON_GAME_MAP_H
 
+#include "player.h"
+
 typedef enum field_type_t {
-    FLOOR = ' ',
-    WALL = '?',
-    BUSH = '#',
-    COIN = 'c',
-    SMALL_TREASURE = 't',
-    BIG_TREASURE = 'T',
-    CAMPSITE = 'A'
+    FIELD_FLOOR = ' ',
+    FIELD_WALL = '?',
+    FIELD_BUSH = '#',
+    FIELD_COIN = 'c',
+    FIELD_SMALL_TREASURE = 't',
+    FIELD_BIG_TREASURE = 'T',
+    FIELD_CAMPSITE = 'A'
 } FieldType;
+
+typedef struct field_t {
+    FieldType type;
+    unsigned isPlayerOn: 1;
+    union {
+        unsigned int playerId;
+    };
+} Field;
 
 typedef struct map_t {
     unsigned int height;
     unsigned int width;
-    FieldType **fields;
+    Field **fields;
 } Map;
 
 /*
@@ -30,5 +40,32 @@ int load_map(const char *filename, Map **pMap);
  * @param pMap pointer to struct instance to be freed.
  */
 void destroy_map(Map **pMap);
+
+/*
+ * @brief prints Map to stdout.
+ * @param map pointer to map intended to be printed.
+ */
+void print_map(const Map *map);
+
+/*
+ * @brief checks if given fieldType allows entities to walk on
+ * @param fieldType type of field to be checked
+ * @return 0 if untravelsable, 1 if traversable
+ */
+int is_traversable_field(FieldType fieldType);
+
+/*
+ * @brief checks if given field is occupied by any entity
+ * @param field field to be checked
+ * @return 0 if unoccupied, 1 if occupied
+ */
+int is_occupied_field(Field *field);
+
+/*
+ * @brief finds random location with traversable field and not occupied by any entity
+ * @param map map to find field on
+ * @return location of free field
+ */
+Location get_random_free_location(Map *map);
 
 #endif //DUNGEON_GAME_MAP_H

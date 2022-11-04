@@ -9,16 +9,23 @@ enable_testing()
 add_subdirectory(thirdparty/googletest)
 
 set(Headers
+        src/common.h
         src/map.h
-        )
+        src/player.h
+        src/game.h)
+
 set(Sources
+        src/common.c
         src/map.c
-        )
+        src/player.c
+        src/game.c)
 
 add_executable(dungeon_game src/main.c ${Headers} ${Sources})
 
 set(Test_Sources
-        tests/map.cpp)
+        tests/map.cpp
+        tests/player.cpp
+        tests/game.cpp)
 
 add_executable(dungeon_game_tests ${Headers} ${Sources} ${Test_Sources})
 
