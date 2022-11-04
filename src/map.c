@@ -43,7 +43,8 @@ Map *create_map(unsigned int height, unsigned int width) {
 int read_map(FILE *file, Map *map) {
     for (int i = 0; i < map->height; i++) {
         for (int j = 0; j < map->width; j++) {
-            map->fields[i][j] = fgetc(file);
+            map->fields[i][j].type = fgetc(file);
+            map->fields[i][j].isPlayerOn = 0;
         }
         fgetc(file); // discard newline
     }
@@ -57,10 +58,11 @@ int read_map(FILE *file, Map *map) {
  * @return 0 on success, 1 on error e.g. invalid field type
  */
 int validate_map(const Map *map) {
-    static char permitted_field_types[] = {FLOOR, WALL, BUSH, COIN, SMALL_TREASURE, BIG_TREASURE, CAMPSITE, '\0'};
+    static char permitted_field_types[] = {FIELD_FLOOR, FIELD_WALL, FIELD_BUSH, FIELD_COIN, FIELD_SMALL_TREASURE,
+                                           FIELD_BIG_TREASURE, FIELD_CAMPSITE, '\0'};
     for (int i = 0; i < map->height; i++) {
         for (int j = 0; j < map->width; j++) {
-            if (!strchr(permitted_field_types, map->fields[i][j])) {
+            if (!strchr(permitted_field_types, map->fields[i][j].type)) {
                 return 1;
             }
         }
@@ -108,4 +110,51 @@ void destroy_map(Map **pMap) {
     }
     free(map->fields);
     free(map);
+}
+
+void print_map(const Map *map) {
+    for (int i = 0; i < map->height; i++) {
+        for (int j = 0; j < map->width; j++) {
+            if (map->fields[i][j].isPlayerOn) {
+                printf("%d", map->fields[i][j].playerId);
+            } else {
+                printf("%c", map->fields[i][j].type);
+            }
+        }
+        printf("\n");
+    }
+}
+
+int is_traversable_field(FieldType fieldType) {
+    static const char TRAVERSABLE_FIELDS[] = {
+            FIELD_FLOOR,
+            FIELD_BUSH,
+            FIELD_COIN,
+            FIELD_SMALL_TREASURE,
+            FIELD_BIG_TREASURE,
+            FIELD_CAMPSITE,
+            '\0'
+    };
+    if (strchr(TRAVERSABLE_FIELDS, fieldType)) {
+        return 1;
+    }
+    return 0;
+}
+
+int is_occupied_field(Field *field) {
+    return field->isPlayerOn;
+}
+
+//TODO: Potential problems on crowded maps with lots of walls
+Location get_random_free_location(Map *map) {
+    Location randomLocation = {
+            .x=rand_range(0, map->height),
+            .y=rand_range(0, map->width)
+    };
+    while (!is_traversable_field(map->fields[randomLocation.x][randomLocation.y].type) &&
+           is_occupied_field(&map->fields[randomLocation.x][randomLocation.y])) {
+        randomLocation.x = rand_range(0, map->height);
+        randomLocation.y = rand_range(0, map->width);
+    }
+    return randomLocation;
 }

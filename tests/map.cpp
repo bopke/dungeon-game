@@ -13,16 +13,17 @@ TEST(Maps, CorrectMapLoad) {
     EXPECT_EQ(map->width, 5);
     ASSERT_TRUE(map->fields != NULL);
     FieldType correct_fields[3][5] = {
-            {WALL,  COIN,  BUSH,     COIN,  WALL},
-            {FLOOR, FLOOR, CAMPSITE, FLOOR, FLOOR},
-            {WALL,  COIN,  BUSH,     COIN,  WALL}
+            {FIELD_WALL,  FIELD_COIN,  FIELD_BUSH,     FIELD_COIN,  FIELD_WALL},
+            {FIELD_FLOOR, FIELD_FLOOR, FIELD_CAMPSITE, FIELD_FLOOR, FIELD_FLOOR},
+            {FIELD_WALL,  FIELD_COIN,  FIELD_BUSH,     FIELD_COIN,  FIELD_WALL}
     };
     for (int i = 0; i < map->height; i++) {
         ASSERT_TRUE(map->fields[i] != NULL);
         for (int j = 0; j < map->width; j++) {
-            EXPECT_EQ(map->fields[i][j], correct_fields[i][j]);
+            EXPECT_EQ(map->fields[i][j].type, correct_fields[i][j]);
         }
     }
+    print_map(map);
     destroy_map(&map);
 }
 
