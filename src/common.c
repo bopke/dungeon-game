@@ -2,6 +2,8 @@
 
 #include <stdlib.h>
 
+#include <unistd.h>
+
 int rand_range(int min, int max) {
     if (max < min) {
         int t = max;
@@ -13,4 +15,11 @@ int rand_range(int min, int max) {
     int randomized = rand();
     while (randomized > rand_max_uniform_value) randomized = rand();
     return min + randomized % range;
+}
+
+void repeatInIntervals(int interval, void(*func)(void *), void *funcArg) {
+    while (1) {
+        sleep(interval);
+        func(funcArg);
+    }
 }
