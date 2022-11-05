@@ -6,13 +6,28 @@
 
 #include "game.h"
 
+Direction get_direction_from_key_pressed(int key) {
+    switch (key) {
+        case KEY_UP:
+            return DIR_UP;
+        case KEY_DOWN:
+            return DIR_DOWN;
+        case KEY_LEFT:
+            return DIR_LEFT;
+        case KEY_RIGHT:
+            return DIR_RIGHT;
+        default:
+            return DIR_NONE;
+    }
+}
+
 int simulate_walking_player(void *args) {
     GameState *gameState = (GameState *) args;
     int keyPressed = getch();
     if (tolower(keyPressed) == 'q') {
         return 1;
     }
-    Direction direction = rand_range(1, 5);
+    Direction direction = get_direction_from_key_pressed(keyPressed);
     move_player(gameState, 0, direction);
     print_map_curses(gameState->map, 2, 1);
     refresh();
