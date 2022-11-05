@@ -49,7 +49,7 @@ int main() {
     }
     GameState *gameState = create_game(map);
     spawn_player(gameState);
-    printw("Press Q to quit");
+    printw("Move with arrows, press Q to quit");
     repeatInIntervals(1, simulate_walking_player, gameState);
 
     endwin();
