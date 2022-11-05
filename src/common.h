@@ -24,9 +24,9 @@ int rand_range(int min, int max);
 /*
  * @brief runs passed function with given arguments every given seconds interval
  * @param interval time in seconds to wait between function calls
- * @param func function to be called every interval seconds
+ * @param func function to be called every interval seconds. If function returns truthy value, repeating will stop
  * @param funcArg arguments pointer to pass to func
  */
-void repeatInIntervals(int interval, void(*func)(void *), void *funcArg);
+void repeatInIntervals(int interval, int(*func)(void *), void *funcArg);
 
 #endif //DUNGEON_GAME_COMMON_H

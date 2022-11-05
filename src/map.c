@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ncurses.h>
 
 /*
  * @brief allocates Map and set its fields to appropriate values
@@ -122,6 +123,21 @@ void print_map(const Map *map) {
             }
         }
         printf("\n");
+    }
+}
+
+void print_map_curses(const Map *map, int row, int column) {
+    for (int i = 0; i < map->height; i++) {
+        move(row+i, column);
+        for (int j = 0; j < map->width; j++) {
+            if (map->fields[i][j].isPlayerOn) {
+                attron(A_BOLD);
+                printw("%d", map->fields[i][j].playerId);
+                attroff(A_BOLD);
+            } else {
+                printw("%c", map->fields[i][j].type);
+            }
+        }
     }
 }
 
