@@ -17,9 +17,11 @@ int rand_range(int min, int max) {
     return min + randomized % range;
 }
 
-void repeatInIntervals(int interval, void(*func)(void *), void *funcArg) {
+void repeatInIntervals(int interval, int(*func)(void *), void *funcArg) {
     while (1) {
         sleep(interval);
-        func(funcArg);
+        if (func(funcArg)) {
+            break;
+        }
     }
 }

@@ -8,8 +8,8 @@
  * @return location struct with change values
  */
 Location get_location_from_direction(Direction direction) {
-    static Location down = {.x=-1, .y=0};
-    static Location up = {.x=1, .y=0};
+    static Location down = {.x=1, .y=0};
+    static Location up = {.x=-1, .y=0};
     static Location left = {.x=0, .y=-1};
     static Location right = {.x=0, .y=1};
     static Location none = {.x=0, .y=0};

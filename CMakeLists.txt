@@ -8,6 +8,9 @@ enable_testing()
 
 add_subdirectory(thirdparty/googletest)
 
+find_package(Curses REQUIRED)
+include_directories(${CURSES_INCLUDE_DIR})
+
 set(Headers
         src/common.h
         src/map.h
@@ -22,6 +25,7 @@ set(Sources
 
 add_executable(dungeon_game src/main.c ${Headers} ${Sources})
 
+target_link_libraries(dungeon_game ${CURSES_LIBRARIES})
 set(Test_Sources
         tests/map.cpp
         tests/player.cpp
@@ -31,6 +35,7 @@ add_executable(dungeon_game_tests ${Headers} ${Sources} ${Test_Sources})
 
 target_link_libraries(dungeon_game_tests PUBLIC
         gtest_main
+        ${CURSES_LIBRARIES}
         )
 
 

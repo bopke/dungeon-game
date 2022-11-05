@@ -42,10 +42,19 @@ int load_map(const char *filename, Map **pMap);
 void destroy_map(Map **pMap);
 
 /*
+ * @deprecated
  * @brief prints Map to stdout.
  * @param map pointer to map intended to be printed.
  */
 void print_map(const Map *map);
+
+/*
+ * @brief prints Map with curses to given coordinates.
+ * @param map pointer to map intended to be printed.
+ * @param row row number to start printing map on
+ * @param column column number to start printing map on
+ */
+void print_map_curses(const Map *map,int row,int column);
 
 /*
  * @brief checks if given fieldType allows entities to walk on
