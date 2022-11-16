@@ -29,7 +29,8 @@ int simulate_walking_player(void *args) {
     }
     Direction direction = get_direction_from_key_pressed(keyPressed);
     move_player(gameState, 0, direction);
-    print_map_curses(gameState->map, 2, 1);
+    mvprintw(1,1,"Bank money: %d, pocket money: %d",gameState->players[0]->bankAccount,gameState->players[0]->pocketChange);
+    print_map_curses(gameState->map, 3, 1);
     refresh();
     return 0;
 }
