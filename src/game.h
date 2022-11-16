@@ -41,4 +41,12 @@ void teleport_player(GameState *gameState, unsigned int playerId, Location locat
  */
 int move_player(GameState *gameState, unsigned int playerId, Direction direction);
 
+/*
+ * @brief handles reaction of field to player entering it
+ * @param gameState state of game in which context we want to react player with field
+ * @param player id of player
+ * @param field field on which player stands
+ */
+void field_player_react(GameState *gameState, unsigned int playerId, Field *field);
+
 #endif //DUNGEON_GAME_GAME_H

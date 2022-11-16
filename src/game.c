@@ -84,13 +84,36 @@ int move_player(GameState *gameState, unsigned int playerId, Direction direction
     if (newLocation.y < 0) newLocation.y = gameState->map->width - 1;
     if (newLocation.x >= gameState->map->height) newLocation.x = 0;
     if (newLocation.y >= gameState->map->width) newLocation.y = 0;
-    if (is_traversable_field(gameState->map->fields[newLocation.x][newLocation.y].type)) {
-        gameState->map->fields[player->location.x][player->location.y].isPlayerOn = 0;
-        gameState->map->fields[newLocation.x][newLocation.y].isPlayerOn = 1;
-        gameState->map->fields[newLocation.x][newLocation.y].playerId = playerId;
-        player->location = newLocation;
-        return 0;
+    if (!is_traversable_field(gameState->map->fields[newLocation.x][newLocation.y].type)) {
+        return 1;
     }
-    return 1;
+    gameState->map->fields[player->location.x][player->location.y].isPlayerOn = 0;
+    gameState->map->fields[newLocation.x][newLocation.y].isPlayerOn = 1;
+    gameState->map->fields[newLocation.x][newLocation.y].playerId = playerId;
+    player->location = newLocation;
+    field_player_react(gameState, playerId, &gameState->map->fields[newLocation.x][newLocation.y]);
+    return 0;
 
+}
+
+void field_player_react(GameState *gameState, unsigned int playerId, Field *field) {
+    switch (field->type) {
+        case FIELD_COIN:
+            add_wealth(gameState->players[playerId], 1);
+            field->type = FIELD_FLOOR;
+            break;
+        case FIELD_SMALL_TREASURE:
+            add_wealth(gameState->players[playerId], 10);
+            field->type = FIELD_FLOOR;
+            break;
+        case FIELD_BIG_TREASURE:
+            add_wealth(gameState->players[playerId], 50);
+            field->type = FIELD_FLOOR;
+            break;
+        case FIELD_CAMPSITE:
+            transfer_wealth_to_bank(gameState->players[playerId]);
+            break;
+        default:
+            return;
+    }
 }
