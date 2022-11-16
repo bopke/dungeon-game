@@ -41,12 +41,4 @@ void teleport_player(GameState *gameState, unsigned int playerId, Location locat
  */
 int move_player(GameState *gameState, unsigned int playerId, Direction direction);
 
-/*
- * @brief teleports player to given location. Does not check if it's valid field!
- * @param gameState state of game in which context we want to teleport said player
- * @param player id of player to be moved
- * @param location location to which we want to teleport player
- */
-void teleport_player(GameState *gameState, unsigned int playerId, Location location);
-
 #endif //DUNGEON_GAME_GAME_H
