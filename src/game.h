@@ -33,6 +33,15 @@ Player *spawn_player(GameState *gameState);
 void teleport_player(GameState *gameState, unsigned int playerId, Location location);
 
 /*
+ * @brief attempts to move player in given direction. Takes into account slowdown of player.
+ * @param gameState state of game in which context we want to move said player
+ * @param playerId id of player to be moved
+ * @param direction direction in which we want to move player, if possible
+ * @return 0 on succesful movement, 1 on incorrect move
+ */
+int attempt_move_player(GameState *gameState, unsigned int playerId, Direction direction);
+
+/*
  * @brief moves player in given direction
  * @param gameState state of game in which context we want to move said player
  * @param playerId id of player to be moved

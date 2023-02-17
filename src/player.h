@@ -6,6 +6,7 @@
 typedef struct player_t {
     unsigned int id;
     Location location;
+    int slowdown_rounds;
     unsigned int pocketChange;
     unsigned int bankAccount;
 } Player;
@@ -43,4 +44,5 @@ void transfer_wealth_to_bank(Player *player);
  * @param pPlayer pointer to struct instance to be freed.
  */
 void destroy_player(Player **pPlayer);
+
 #endif //DUNGEON_GAME_PLAYER_H

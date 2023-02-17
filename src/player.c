@@ -9,6 +9,7 @@ Player *create_player(unsigned int id, Location location) {
     player->location = location;
     player->bankAccount = 0;
     player->pocketChange = 0;
+    player->slowdown_rounds = 0;
     return player;
 }
 
