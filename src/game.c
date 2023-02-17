@@ -73,6 +73,18 @@ void teleport_player(GameState *gameState, unsigned int playerId, Location locat
     player->location = location;
 }
 
+int attempt_move_player(GameState *gameState, unsigned int playerId, Direction direction) {
+    Player *player = gameState->players[playerId];
+    if (player->slowdown_rounds > 0) {
+        player->slowdown_rounds--;
+        return 0;
+    }
+    if (direction != DIR_NONE) {
+        return move_player(gameState, playerId, direction);
+    }
+    return 0;
+}
+
 int move_player(GameState *gameState, unsigned int playerId, Direction direction) {
     Player *player = gameState->players[playerId];
     Location directionInfluencedLocation = get_location_from_direction(direction);
@@ -112,6 +124,9 @@ void field_player_react(GameState *gameState, unsigned int playerId, Field *fiel
             break;
         case FIELD_CAMPSITE:
             transfer_wealth_to_bank(gameState->players[playerId]);
+            break;
+        case FIELD_BUSH:
+            gameState->players[playerId]->slowdown_rounds = 1;
             break;
         default:
             return;
