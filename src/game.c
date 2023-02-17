@@ -79,7 +79,10 @@ int attempt_move_player(GameState *gameState, unsigned int playerId, Direction d
         player->slowdown_rounds--;
         return 0;
     }
-    return move_player(gameState, playerId, direction);
+    if (direction != DIR_NONE) {
+        return move_player(gameState, playerId, direction);
+    }
+    return 0;
 }
 
 int move_player(GameState *gameState, unsigned int playerId, Direction direction) {
